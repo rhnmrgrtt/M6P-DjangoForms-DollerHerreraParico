@@ -1,0 +1,51 @@
+<!--
+Rhinakels Herrera, 245785; Zale Sebastian Latonio, 242494 ; Nathan Riley Sy, 244311
+March 17, 2026
+
+We hereby attest to the truth of the following facts:
+
+We have not discussed the HTML language code in our program with anyone
+other than our instructor or the teaching assistants assigned to this course.
+
+We have not used HTML language code obtained from another student, or
+any other unauthorized source, either modified or unmodified.
+
+If any HTML language code or documentation used in our program was
+obtained from another source, such as a textbook or course notes, that has been clearly noted with proper citation in the
+comments of our program.
+-->
+
+{% extends 'MyInventoryApp/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Add Water Bottle Details:</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label>Name:</label>
+                <input type="text" name="name" class="form-control">
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label>Capacity:</label>
+                    <input type="text" name="capacity" class="form-control">
+                </div>
+                <div class="col">
+                    <label>Price:</label>
+                    <input type="text" name="price" class="form-control">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label>Supplier:</label>
+                <input type="text" name="supplier" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-secondary">Add Bottle</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
