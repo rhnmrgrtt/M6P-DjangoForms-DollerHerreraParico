@@ -1,42 +1,29 @@
-<!--
-Rhinakels Herrera, 245785; Zale Sebastian Latonio, 242494 ; Nathan Riley Sy, 244311
-March 17, 2026
-
-We hereby attest to the truth of the following facts:
-
-We have not discussed the HTML language code in our program with anyone
-other than our instructor or the teaching assistants assigned to this course.
-
-We have not used HTML language code obtained from another student, or
-any other unauthorized source, either modified or unmodified.
-
-If any HTML language code or documentation used in our program was
-obtained from another source, such as a textbook or course notes, that has been clearly noted with proper citation in the
-comments of our program.
--->
-
-{% extends 'MyInventoryApp/base.html' %}
-
-{% block content %}
-<h2 class="mb-4">Suppliers</h2>
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Contact</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for d in suppliers %}
-        <tr>
-            <td>{{ d.id }}</td>
-            <td>{{ d.name }}</td>
-            <td>{{ d.country }}</td>
-        </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suppliers</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Suppliers</h2>
+        <div>
+            <a href="{% url 'add_bottle' %}" class="btn btn-success me-2">Add Water Bottle</a>
+            <a href="{% url 'manage_account' pk=account.pk %}" class="btn btn-secondary me-2">Manage Account</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+    <div class="list-group">
+        {% for s in suppliers %}
+            <a href="{% url 'view_bottles' %}" class="list-group-item list-group-item-action">
+                {{ s.name }}
+            </a>
         {% empty %}
-        <tr><td colspan="2">No suppliers found.</td></tr>
+            <p class="text-muted">No suppliers found.</p>
         {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+    </div>
+</div>
+</body>
+</html>

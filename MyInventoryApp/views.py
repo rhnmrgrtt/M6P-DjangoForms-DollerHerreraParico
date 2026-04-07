@@ -1,52 +1,39 @@
-'''
-Rhinakels Herrera, 245785; Zale Sebastian Latonio, 242494 ; Nathan Riley Sy, 244311
-March 17, 2026
-
-We hereby attest to the truth of the following facts:
-
-We have not discussed the HTML language code in our program with anyone
-other than our instructor or the teaching assistants assigned to this course.
-
-We have not used HTML language code obtained from another student, or
-any other unauthorized source, either modified or unmodified.
-
-If any HTML language code or documentation used in our program was
-obtained from another source, such as a textbook or course notes, that has been clearly noted with proper citation in the
-comments of our program.
-'''
-
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Supplier, WaterBottle, Account
+from .models import Account, Supplier, WaterBottle
 
-# Global variable to track logged-in account (as taught in class)
+# Global variable to track logged-in account
 current_account = None
 
-def login_view(request):
+def login(request):
     global current_account
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
             account = Account.objects.get(username=username, password=password)
-            current_account = account  # store in global variable
+            current_account = account
             return redirect('view_supplier')
         except Account.DoesNotExist:
             return render(request, 'MyInventoryApp/login.html', {'error': 'Invalid login'})
-    return render(request, 'MyInventoryApp/login.html')
+    success = request.GET.get('success')
+    return render(request, 'MyInventoryApp/login.html', {'success': success})
 
-def signup_view(request):
+def signup(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         if Account.objects.filter(username=username).exists():
             return render(request, 'MyInventoryApp/signup.html', {'error': 'Account already exists'})
         Account.objects.create(username=username, password=password)
-        return render(request, 'MyInventoryApp/login.html', {'success': 'Account created successfully'})
+        return redirect('/login/?success=Account created successfully')
     return render(request, 'MyInventoryApp/signup.html')
 
 def view_supplier(request):
     suppliers = Supplier.objects.all()
-    return render(request, 'MyInventoryApp/view_supplier.html', {'suppliers': suppliers, 'account': current_account})
+    return render(request, 'MyInventoryApp/view_supplier.html', {
+        'suppliers': suppliers,
+        'account': current_account
+    })
 
 def view_bottles(request):
     bottles = WaterBottle.objects.all()
@@ -68,13 +55,18 @@ def add_bottle(request):
         size = request.POST.get('size')
         mouth_size = request.POST.get('mouth_size')
         color = request.POST.get('color')
-        supplier_id = request.POST.get('supplied_by')
-        quantity = request.POST.get('current_quantity')
-        supplier = get_object_or_404(Supplier, pk=supplier_id)
+        current_quantity = request.POST.get('current_quantity')
+        supplied_by_pk = request.POST.get('supplied_by')
+        supplier = get_object_or_404(Supplier, pk=supplied_by_pk)
         WaterBottle.objects.create(
-            SKU=sku, brand=brand, price=price, size=size,
-            mouth_size=mouth_size, color=color,
-            supplied_by=supplier, current_quantity=quantity
+            SKU=sku,
+            brand=brand,
+            price=price,
+            size=size,
+            mouth_size=mouth_size,
+            color=color,
+            current_quantity=current_quantity,
+            supplied_by=supplier
         )
         return redirect('view_supplier')
     suppliers = Supplier.objects.all()
@@ -87,24 +79,30 @@ def manage_account(request, pk):
 def delete_account(request, pk):
     global current_account
     Account.objects.filter(pk=pk).delete()
-    current_account = None  # clear global variable
+    current_account = None
     return redirect('login')
 
 def change_password(request, pk):
     account = get_object_or_404(Account, pk=pk)
     if request.method == "POST":
-        current = request.POST.get('current_password')
-        new_pass = request.POST.get('new_password')
-        confirm = request.POST.get('confirm_password')
-        if current != account.password:
-            return render(request, 'MyInventoryApp/change_password.html', {'account': account, 'error': 'Current password is incorrect'})
-        if new_pass != confirm:
-            return render(request, 'MyInventoryApp/change_password.html', {'account': account, 'error': 'New passwords do not match'})
-        Account.objects.filter(pk=pk).update(password=new_pass)
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        if current_password != account.getPassword():
+            return render(request, 'MyInventoryApp/change_password.html', {
+                'account': account,
+                'error': 'Current password is incorrect'
+            })
+        if new_password != confirm_password:
+            return render(request, 'MyInventoryApp/change_password.html', {
+                'account': account,
+                'error': 'New passwords do not match'
+            })
+        Account.objects.filter(pk=pk).update(password=new_password)
         return redirect('manage_account', pk=pk)
     return render(request, 'MyInventoryApp/change_password.html', {'account': account})
 
-def logout_view(request):
+def logout(request):
     global current_account
-    current_account = None  # clear global variable on logout
+    current_account = None
     return redirect('login')
