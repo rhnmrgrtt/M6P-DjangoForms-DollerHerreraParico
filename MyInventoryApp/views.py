@@ -29,6 +29,8 @@ def signup(request):
     return render(request, 'MyInventoryApp/signup.html')
 
 def view_supplier(request):
+    if current_account is None:
+        return redirect('login')
     suppliers = Supplier.objects.all()
     return render(request, 'MyInventoryApp/view_supplier.html', {
         'suppliers': suppliers,
@@ -36,6 +38,8 @@ def view_supplier(request):
     })
 
 def view_bottles(request):
+    if current_account is None:
+        return redirect('login')
     bottles = WaterBottle.objects.all()
     return render(request, 'MyInventoryApp/view_bottles.html', {'bottles': bottles})
 
@@ -48,6 +52,8 @@ def delete_bottle(request, pk):
     return redirect('view_bottles')
 
 def add_bottle(request):
+    if current_account is None:
+        return redirect('login')
     if request.method == "POST":
         sku = request.POST.get('sku')
         brand = request.POST.get('brand')
@@ -73,6 +79,8 @@ def add_bottle(request):
     return render(request, 'MyInventoryApp/add_bottle.html', {'suppliers': suppliers})
 
 def manage_account(request, pk):
+    if current_account is None:
+        return redirect('login')
     account = get_object_or_404(Account, pk=pk)
     return render(request, 'MyInventoryApp/manage_account.html', {'account': account})
 
@@ -83,6 +91,8 @@ def delete_account(request, pk):
     return redirect('login')
 
 def change_password(request, pk):
+    if current_account is None:
+        return redirect('login')
     account = get_object_or_404(Account, pk=pk)
     if request.method == "POST":
         current_password = request.POST.get('current_password')

@@ -11,7 +11,9 @@
         <h2>Suppliers</h2>
         <div>
             <a href="{% url 'add_bottle' %}" class="btn btn-success me-2">Add Water Bottle</a>
+            {% if account %}
             <a href="{% url 'manage_account' pk=account.pk %}" class="btn btn-secondary me-2">Manage Account</a>
+            {% endif %} Account</a>
             <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
         </div>
     </div>
