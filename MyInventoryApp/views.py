@@ -40,12 +40,14 @@ def view_supplier(request):
         'account': current_account
     })
 
-def view_bottles(request):
+def view_bottles(request, pk):
     if current_account is None:
         return redirect('login')
-    bottles = WaterBottle.objects.all()
+    supplier = get_object_or_404(Supplier, pk=pk)
+    bottles = WaterBottle.objects.filter(supplied_by=supplier)
     return render(request, 'MyInventoryApp/view_bottles.html', {
         'bottles': bottles,
+        'supplier': supplier,
         'account': current_account
     })
 
@@ -61,8 +63,10 @@ def view_bottle_details(request, pk):
 def delete_bottle(request, pk):
     if current_account is None:
         return redirect('login')
-    WaterBottle.objects.filter(pk=pk).delete()
-    return redirect('view_bottles')
+    bottle = get_object_or_404(WaterBottle, pk=pk)
+    supplier_pk = bottle.supplied_by.pk
+    bottle.delete()
+    return redirect(f'/view_bottles/{supplier_pk}/')
 
 def add_bottle(request):
     if current_account is None:
