@@ -1,7 +1,9 @@
+from django.contrib import admin
 from django.urls import path
 from MyInventoryApp import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),  # add this back
     path('', views.login, name='login'),
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
