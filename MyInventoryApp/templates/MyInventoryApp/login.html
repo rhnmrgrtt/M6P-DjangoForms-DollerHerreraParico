@@ -1,44 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card shadow">
-                <div class="card-header bg-dark text-white text-center">
-                    <h4>MyInventorySystem Login</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Enter username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
-                        </div>
-                        {% if error %}
+{% extends 'MyInventoryApp/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="margin-top: 60px;">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center">
+                <h4>Login to Your Account</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+
+                    {% if error %}
                         <div class="alert alert-danger">{{ error }}</div>
-                        {% endif %}
-                        {% if success %}
+                    {% endif %}
+
+                    {% if success %}
                         <div class="alert alert-success">{{ success }}</div>
-                        {% endif %}
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-dark">Login</button>
-                            <a href="{% url 'signup' %}" class="btn btn-outline-dark">Sign Up</a>
-                        </div>
-                    </form>
-                </div>
+                    {% endif %}
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-dark">Login</button>
+                        <a href="{% url 'signup' %}" class="btn btn-outline-dark">Sign Up</a>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock %}

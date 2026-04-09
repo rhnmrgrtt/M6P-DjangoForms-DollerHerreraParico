@@ -3,23 +3,29 @@
 {% block title %}Bottle Details{% endblock %}
 
 {% block content %}
-<div class="card shadow-sm">
-    <div class="card-header bg-dark text-white">
-        <h4 class="mb-0">Water Bottle Details</h4>
+<div class="mt-4"> 
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Water Bottle Details</h4>
+        </div>
+
+        <div class="card-body">
+            <p><strong>SKU:</strong> {{ bottle.SKU }}</p>
+            <p><strong>Brand:</strong> {{ bottle.brand }}</p>
+            <p><strong>Price:</strong> {{ bottle.price }}</p>
+            <p><strong>Size:</strong> {{ bottle.size }}</p>
+            <p><strong>Mouth Size:</strong> {{ bottle.mouth_size }}</p>
+            <p><strong>Color:</strong> {{ bottle.color }}</p>
+            <p><strong>Supplier:</strong> {{ bottle.supplied_by.name }}</p>
+            <p><strong>Quantity:</strong> {{ bottle.current_quantity }}</p>
+        </div>
+
+        <div class="card-footer">
+            <a href="{% url 'delete_bottle' pk=bottle.pk %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'view_bottles' pk=bottle.supplied_by.pk %}" class="btn btn-secondary">Back</a>
+        </div>
     </div>
-    <div class="card-body">
-        <p><strong>SKU:</strong> {{ bottle.SKU }}</p>
-        <p><strong>Brand:</strong> {{ bottle.brand }}</p>
-        <p><strong>Price:</strong> {{ bottle.price }}</p>
-        <p><strong>Size:</strong> {{ bottle.size }}</p>
-        <p><strong>Mouth Size:</strong> {{ bottle.mouth_size }}</p>
-        <p><strong>Color:</strong> {{ bottle.color }}</p>
-        <p><strong>Supplier:</strong> {{ bottle.supplied_by.name }}</p>
-        <p><strong>Quantity:</strong> {{ bottle.current_quantity }}</p>
-    </div>
-    <div class="card-footer">
-        <a href="{% url 'delete_bottle' pk=bottle.pk %}" class="btn btn-danger">Delete</a>
-        <a href="{% url 'view_bottles' pk=bottle.supplied_by.pk %}" class="btn btn-secondary">Back</a>
-    </div>
+
 </div>
 {% endblock %}
