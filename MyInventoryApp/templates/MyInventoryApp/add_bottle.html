@@ -1,62 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Water Bottle</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-<div class="container mt-4">
-    <div class="card shadow">
-        <div class="card-header bg-success text-white">
-            <h4>Add Water Bottle</h4>
-        </div>
-        <div class="card-body">
-            <form method="POST">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label class="form-label">SKU</label>
-                    <input type="text" name="sku" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Brand</label>
-                    <input type="text" name="brand" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Price</label>
-                    <input type="number" step="0.01" name="price" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Size</label>
-                    <input type="text" name="size" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Mouth Size</label>
-                    <input type="text" name="mouth_size" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Color</label>
-                    <input type="text" name="color" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Current Quantity</label>
-                    <input type="number" name="current_quantity" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Supplier</label>
-                    <select name="supplied_by" class="form-select" required>
-                        {% for s in suppliers %}
+{% extends 'MyInventoryApp/base.html' %}
+{% block title %}Add Water Bottle{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4>Add Water Bottle</h4>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">SKU</label>
+                        <input type="text" name="sku" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Brand</label>
+                        <input type="text" name="brand" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price</label>
+                        <input type="number" step="0.01" min="0" name="price" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Size</label>
+                        <input type="text" name="size" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mouth Size</label>
+                        <input type="text" name="mouth_size" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Color</label>
+                        <input type="text" name="color" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Current Quantity</label>
+                        <input type="number" min="0" name="current_quantity" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Supplier</label>
+                        <select name="supplied_by" class="form-select" required>
+                            {% for s in suppliers %}
                             <option value="{{ s.pk }}">{{ s.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                    <a href="{% url 'view_supplier' %}" class="btn btn-secondary">Cancel</a>
-                </div>
-            </form>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-dark">Confirm</button>
+                        <a href="{% url 'view_supplier' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock %}

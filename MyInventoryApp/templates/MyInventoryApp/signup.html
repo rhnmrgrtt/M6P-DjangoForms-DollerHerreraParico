@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card shadow">
-                <div class="card-header bg-success text-white text-center">
+                <div class="card-header bg-dark text-white text-center">
                     <h4>Create Account</h4>
                 </div>
                 <div class="card-body">
@@ -18,18 +18,18 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Choose a username" required>
+                            <input type="text" name="username" class="form-control" placeholder="Enter username" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Choose a password" required>
+                            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
                         </div>
                         {% if error %}
-                            <div class="alert alert-danger">{{ error }}</div>
+                        <div class="alert alert-danger">{{ error }}</div>
                         {% endif %}
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-success">Create Account</button>
-                            <a href="{% url 'login' %}" class="btn btn-outline-secondary">Back to Login</a>
+                            <button type="submit" class="btn btn-dark">Sign Up</button>
+                            <a href="{% url 'login' %}" class="btn btn-outline-dark">Back to Login</a>
                         </div>
                     </form>
                 </div>

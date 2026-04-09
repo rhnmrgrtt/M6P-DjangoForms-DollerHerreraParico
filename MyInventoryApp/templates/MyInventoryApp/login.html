@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
+                <div class="card-header bg-dark text-white text-center">
                     <h4>MyInventorySystem Login</h4>
                 </div>
                 <div class="card-body">
@@ -25,14 +25,14 @@
                             <input type="password" name="password" class="form-control" placeholder="Enter password" required>
                         </div>
                         {% if error %}
-                            <div class="alert alert-danger">{{ error }}</div>
+                        <div class="alert alert-danger">{{ error }}</div>
                         {% endif %}
                         {% if success %}
-                            <div class="alert alert-success">{{ success }}</div>
+                        <div class="alert alert-success">{{ success }}</div>
                         {% endif %}
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="{% url 'signup' %}" class="btn btn-outline-secondary">Sign Up</a>
+                            <button type="submit" class="btn btn-dark">Login</button>
+                            <a href="{% url 'signup' %}" class="btn btn-outline-dark">Sign Up</a>
                         </div>
                     </form>
                 </div>
