@@ -175,8 +175,8 @@ def change_password(request, pk):
                 'account': account,
                 'error': 'New password cannot be the same as current password'
             })
-        Account.objects.filter(pk=pk).update(password=new_password)
-        return redirect('manage_account', pk=pk)
+        Account.objects.filter(pk=account.pk).update(password=new_password)
+        return redirect('manage_account', pk=account.pk)
     return render(request, 'MyInventoryApp/change_password.html', {'account': account})
 
 def logout(request):
